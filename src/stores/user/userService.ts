@@ -5,7 +5,7 @@ const endpoint = 'auth';
 const apiService = new ApiService();
 
 export interface UserInputInterface {
-  email: string;
+  username: string;
   password: string;
 }
 
@@ -26,7 +26,7 @@ const loginUser = async (input: UserInputInterface) => {
   return {
     user: {
       id: '123',
-      email: input.email,
+      username: input.username,
     },
   };
 };
