@@ -100,11 +100,12 @@ export const userSlice = createSlice({
         state.success = userType.LOGIN_USER;
         state.error = '';
         state.user = action.payload.user;
+        state.message = 'Login successful';
       })
-      .addCase(loginUser.rejected, (state, action: any) => {
+      .addCase(loginUser.rejected, (state) => {
         state.isLoading = false;
         state.error = userType.LOGIN_USER;
-        state.message = action.payload.message;
+        state.message = 'Something went wrong!';
       })
       .addCase(logout.fulfilled, (state) => {
         state.isLoading = false;

@@ -1,27 +1,24 @@
-import { UserLoginInterface } from '@/shared/models/User';
-import { ApiService } from '@/shared/services/api.service';
-// import { useAppDispatch, useAppSelector } from '@/stores/hook';
-// import { loginUser } from '@/stores/user/userSlice';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import ViteLogo from '@/assets/vite.svg?react';
+import { UserLoginInterface } from '@/shared/models/User';
+import { useAppDispatch, useAppSelector } from '@/stores/hook';
+import { loginUser, reset } from '@/stores/user/userSlice';
+import Logo from '@/assets/logo-fuvavi.svg?react';
 import SpinnerIcon from '@/assets/icons/spinner.svg?react';
 
 const Login = () => {
-  // const dispatch = useAppDispatch();
-  // const { user } = useAppSelector((state) => state.user);
-
-  // const handleLogin = () => {
-  //   dispatch(loginUser({ username: 'name@domain.com', password: '1234' }));
-  // };
-
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const api = new ApiService();
+  const { user, error, message, isLoading } = useAppSelector(
+    (state) => state.user,
+  );
+
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<UserLoginInterface>({
     defaultValues: {
       username: 'kminchelle',
@@ -30,22 +27,29 @@ const Login = () => {
   });
 
   const onSubmit: SubmitHandler<UserLoginInterface> = async (data) => {
-    await api
-      .post('/auth/login', data)
-      .then((res) => {
-        if (res.token) {
-          localStorage.setItem('accessToken', res.token);
-          localStorage.setItem('userId', res.id);
-          navigate('/');
-        }
-      })
-      .catch((error: Error) => {
-        toast.error(error.message, {
-          theme: 'colored',
-          position: 'bottom-center',
-        });
-      });
+    dispatch(reset());
+    dispatch(loginUser(data));
   };
+
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem('user_id', user.id);
+      toast.success(message, {
+        theme: 'colored',
+        position: 'bottom-center',
+      });
+      navigate('/');
+    }
+  }, [user, navigate]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(message, {
+        theme: 'colored',
+        position: 'bottom-center',
+      });
+    }
+  }, [error, message]);
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -63,7 +67,7 @@ const Login = () => {
       </div>
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <Link to="/">
-          <ViteLogo className="mx-auto h-16 w-auto" />
+          <Logo className="mx-auto h-24 w-24" />
         </Link>
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Sign in to your account
@@ -131,11 +135,11 @@ const Login = () => {
 
           <div>
             <button
-              disabled={isSubmitting}
+              disabled={isLoading}
               type="submit"
               className="flex w-full justify-center items-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              {isSubmitting ? (
+              {isLoading ? (
                 <span className="transition ease-in-out -translate-x-2 duration-300">
                   <SpinnerIcon className="animate-spin h-5 w-5" />
                 </span>
