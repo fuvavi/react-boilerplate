@@ -1,6 +1,13 @@
 export interface UserInterface {
   id: string;
-  email: string;
-  createdAt?: string;
-  updatedAt?: string;
+  username: string;
+  firstName?: string;
+  lastName?: string;
+  gender?: string;
+  image?: string;
+}
+
+export interface UserLoginInterface {
+  username: string;
+  password: string;
 }

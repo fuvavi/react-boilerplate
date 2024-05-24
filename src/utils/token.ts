@@ -1,3 +1,5 @@
+import authStorageService from '@/shared/services/authStorage.service';
+
 export const isAuthenticated = (): boolean => {
-  return localStorage.getItem('accessToken') !== null;
+  return !!authStorageService().getToken();
 };

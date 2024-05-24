@@ -5,7 +5,7 @@ const endpoint = 'auth';
 const apiService = new ApiService();
 
 export interface UserInputInterface {
-  email: string;
+  username: string;
   password: string;
 }
 
@@ -19,14 +19,18 @@ const registerUser = async (input: UserInputInterface) => {
 
 // Login user
 const loginUser = async (input: UserInputInterface) => {
-  // const data = await apiService.post(`${endpoint}/login`, input);
-  // const { accessToken } = data;
-  // authStorageService().setToken(accessToken);
-  // return data;
+  const data = await apiService.post(`${endpoint}/login`, input);
+  const { token, id, firstName, lastName, username, gender, image } = data;
+  token && authStorageService().setToken(token);
+
   return {
     user: {
-      id: '123',
-      email: input.email,
+      id,
+      firstName,
+      lastName,
+      username,
+      gender,
+      image,
     },
   };
 };
