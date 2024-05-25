@@ -1,0 +1,7 @@
+{
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "html.format.extraLiners": "",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.wordWrapColumn": 160
+}
