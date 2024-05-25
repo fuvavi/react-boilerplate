@@ -5,15 +5,17 @@ import { toast } from 'react-toastify';
 import { UserLoginInterface } from '@/shared/models/User';
 import { useAppDispatch, useAppSelector } from '@/stores/hook';
 import { loginUser, reset } from '@/stores/user/userSlice';
-import Logo from '@/assets/logo-fuvavi.svg?react';
 import SpinnerIcon from '@/assets/icons/spinner.svg?react';
+import Logo from '@/shared/components/Logo';
 
 const Login = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { user, error, message, isLoading } = useAppSelector(
+  const { user, error, message, success, isLoading } = useAppSelector(
     (state) => state.user,
   );
+
+  console.log('error, message', !!user, !!message);
 
   const {
     register,
@@ -32,18 +34,19 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (user) {
+    if (success && user) {
       localStorage.setItem('user_id', user.id);
       toast.success(message, {
         theme: 'colored',
         position: 'bottom-center',
       });
+      dispatch(reset());
       navigate('/');
     }
-  }, [user, navigate]);
+  }, [success, user, navigate]);
 
   useEffect(() => {
-    if (error) {
+    if (!!error && !!message) {
       toast.error(message, {
         theme: 'colored',
         position: 'bottom-center',
@@ -67,7 +70,7 @@ const Login = () => {
       </div>
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <Link to="/">
-          <Logo className="mx-auto h-24 w-24" />
+          <Logo className="mx-auto" width={100} height={100} />
         </Link>
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Sign in to your account
@@ -78,7 +81,7 @@ const Login = () => {
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <div>
             <label
-              htmlFor="email"
+              htmlFor="username"
               className="flex text-sm font-medium leading-6 text-gray-900"
             >
               Username
@@ -137,7 +140,7 @@ const Login = () => {
             <button
               disabled={isLoading}
               type="submit"
-              className="flex w-full justify-center items-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="flex w-full justify-center items-center rounded-md bg-indigo-500 disabled:bg-indigo-300 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
               {isLoading ? (
                 <span className="transition ease-in-out -translate-x-2 duration-300">

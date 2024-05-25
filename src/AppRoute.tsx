@@ -1,17 +1,20 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import RequireAuth from '@/RequiredAuth';
+import RequireAuth from '@/RequireAuth';
+import Home from '@/pages/home';
 import Login from '@/pages/login';
+import Admin from '@/pages/admin';
 
 const AppRouter = (): React.ReactElement => (
   <BrowserRouter>
     <Routes>
+      <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route
-        path="/"
+        path="/admin"
         element={
           <RequireAuth>
-            <div>Home</div>
+            <Admin />
           </RequireAuth>
         }
       />

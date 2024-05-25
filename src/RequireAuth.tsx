@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import { isAuthenticated } from './utils/token';
+import { isAuthenticated } from '@/utils/token';
 
 interface RequireAuthProps {
   children: ReactElement;
