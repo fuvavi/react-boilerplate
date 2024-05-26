@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { UserLoginInterface } from '@/shared/models/User';
 import { useAppDispatch, useAppSelector } from '@/stores/hook';
 import { loginUser, reset } from '@/stores/user/userSlice';
+import { useQueryParams } from '@/shared/hooks/useQueryParam';
 import SpinnerIcon from '@/assets/icons/spinner.svg?react';
 import Logo from '@/shared/components/Logo';
 
@@ -14,8 +15,8 @@ const Login = () => {
   const { user, error, message, success, isLoading } = useAppSelector(
     (state) => state.user,
   );
-
-  console.log('error, message', !!user, !!message);
+  const query = useQueryParams();
+  const fromUrl = query.get('from');
 
   const {
     register,
@@ -41,7 +42,7 @@ const Login = () => {
         position: 'bottom-center',
       });
       dispatch(reset());
-      navigate('/');
+      navigate(fromUrl ? fromUrl : '/');
     }
   }, [success, user, navigate]);
 
