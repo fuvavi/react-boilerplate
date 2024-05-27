@@ -1,8 +1,7 @@
 import { Toaster } from 'sonner';
 import Routings from '@/router/Routings';
-import 'react-toastify/dist/ReactToastify.css';
-import './App.css';
 import { BrowserRouter as Router } from 'react-router-dom';
+import './App.css';
 
 function App() {
   return (
