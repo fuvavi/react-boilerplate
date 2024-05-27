@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { UserLoginInterface } from '@/shared/models/User';
@@ -35,16 +35,18 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (success && user) {
+    if (!!success && !!user) {
       localStorage.setItem('user_id', user.id);
       toast.success(message, {
         theme: 'colored',
         position: 'bottom-center',
       });
-      dispatch(reset());
       navigate(fromUrl ? fromUrl : '/');
     }
-  }, [success, user, navigate]);
+    return () => {
+      dispatch(reset());
+    };
+  }, [success, user, navigate, dispatch, fromUrl, message]);
 
   useEffect(() => {
     if (!!error && !!message) {
@@ -53,7 +55,10 @@ const Login = () => {
         position: 'bottom-center',
       });
     }
-  }, [error, message]);
+    return () => {
+      dispatch(reset());
+    };
+  }, [error, message, dispatch]);
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -70,9 +75,7 @@ const Login = () => {
         />
       </div>
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <Link to="/">
-          <Logo className="mx-auto" width={100} height={100} />
-        </Link>
+        <Logo className="mx-auto" width={100} height={100} />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Sign in to your account
         </h2>
@@ -93,6 +96,7 @@ const Login = () => {
                 id="username"
                 name="username"
                 type="text"
+                autoComplete="username"
                 className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
               {errors.username ? (
