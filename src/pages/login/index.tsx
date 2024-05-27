@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 import { UserLoginInterface } from '@/shared/models/User';
 import { useAppDispatch, useAppSelector } from '@/stores/hook';
 import { loginUser, reset } from '@/stores/user/userSlice';
