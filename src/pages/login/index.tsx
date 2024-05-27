@@ -37,10 +37,7 @@ const Login = () => {
   useEffect(() => {
     if (!!success && !!user) {
       localStorage.setItem('user_id', user.id);
-      toast.success(message, {
-        theme: 'colored',
-        position: 'bottom-center',
-      });
+      toast.success(message);
       navigate(fromUrl ? fromUrl : '/');
     }
     return () => {
@@ -50,10 +47,7 @@ const Login = () => {
 
   useEffect(() => {
     if (!!error && !!message) {
-      toast.error(message, {
-        theme: 'colored',
-        position: 'bottom-center',
-      });
+      toast.error(message);
     }
     return () => {
       dispatch(reset());

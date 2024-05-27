@@ -1,4 +1,4 @@
-import { ToastContainer } from 'react-toastify';
+import { Toaster } from 'sonner';
 import Routings from '@/router/Routings';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
@@ -8,7 +8,7 @@ function App() {
   return (
     <Router>
       <Routings />
-      <ToastContainer />
+      <Toaster richColors />
     </Router>
   );
 }
