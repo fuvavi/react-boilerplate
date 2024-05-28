@@ -8,6 +8,7 @@ import { loginUser, reset } from '@/stores/user/userSlice';
 import { useQueryParams } from '@/shared/hooks/useQueryParam';
 import SpinnerIcon from '@/assets/icons/spinner.svg?react';
 import Logo from '@/shared/components/Logo';
+import { userType } from '@/stores/user/userType';
 
 const Login = () => {
   const dispatch = useAppDispatch();
@@ -35,8 +36,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (!!success && !!user) {
-      localStorage.setItem('user_id', user.id);
+    if (success === userType.LOGIN_USER && !!user) {
       toast.success(message);
       navigate(fromUrl ? fromUrl : '/');
     }
@@ -46,7 +46,7 @@ const Login = () => {
   }, [success, user, navigate, dispatch, fromUrl, message]);
 
   useEffect(() => {
-    if (!!error && !!message) {
+    if (error === userType.LOGIN_USER && !!message) {
       toast.error(message);
     }
     return () => {
