@@ -42,8 +42,8 @@ const logout = () => {
 
 // Get user me
 const getMe = async () => {
-  const data = await apiService.get(`${endpoint}/me`);
-  return data.user;
+  const user = await apiService.get(`${endpoint}/me`);
+  return user;
 };
 
 const userService = {

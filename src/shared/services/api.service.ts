@@ -2,6 +2,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { BASE_URL } from '@/utils/constant';
 import { HttpMethod } from '@/types/http.enum';
+import authStorageService from './authStorage.service';
 
 export class ApiService {
   axiosInstance: AxiosInstance;
@@ -20,7 +21,7 @@ export class ApiService {
   setupInterceptors() {
     this.axiosInstance.interceptors.request.use(
       async (config: any) => {
-        const accessToken = localStorage.getItem('accessToken');
+        const accessToken = authStorageService().getToken();
         if (accessToken) {
           config.headers['Authorization'] = `Bearer ${accessToken}`;
         }

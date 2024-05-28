@@ -1,31 +1,9 @@
-import Logo from '@/shared/components/Logo';
-import { Link } from 'react-router-dom';
+import Header from '@/shared/components/layout/Header';
 
 const Home = () => {
   return (
     <div className="bg-white">
-      <header className="absolute inset-x-0 top-0 z-50">
-        <nav
-          className="flex items-center justify-between p-6 lg:px-8"
-          aria-label="Global"
-        >
-          <Logo width={60} height={60} />
-          <div className="flex gap-x-12">
-            <Link
-              to="/admin"
-              className="text-sm font-semibold leading-6 text-gray-900"
-            >
-              Admin
-            </Link>
-            <Link
-              to="/login"
-              className="text-sm font-semibold leading-6 text-gray-900"
-            >
-              Login
-            </Link>
-          </div>
-        </nav>
-      </header>
+      <Header />
       <div className="relative isolate px-6 pt-14 lg:px-8">
         <div
           className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
