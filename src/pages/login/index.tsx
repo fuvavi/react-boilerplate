@@ -37,7 +37,6 @@ const Login = () => {
 
   useEffect(() => {
     if (success === userType.LOGIN_USER && !!user) {
-      localStorage.setItem('user_id', user.id);
       toast.success(message);
       navigate(fromUrl ? fromUrl : '/');
     }

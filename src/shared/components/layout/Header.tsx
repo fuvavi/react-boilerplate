@@ -1,12 +1,13 @@
 import { useAppSelector } from '@/stores/hook';
 import Logo from '@/shared/components/Logo';
 import { Link } from 'react-router-dom';
+import { twMerge } from 'tailwind-merge';
 
 const Header = ({ className }: { className?: string }) => {
   const { user } = useAppSelector((state) => state.user);
 
   return (
-    <header className={`absolute inset-x-0 top-0 z-50 ${className}`}>
+    <header className={twMerge('absolute inset-x-0 top-0 z-50', className)}>
       <nav
         className="flex items-center justify-between p-6 lg:px-8"
         aria-label="Global"
