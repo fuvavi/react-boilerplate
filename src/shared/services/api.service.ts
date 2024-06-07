@@ -35,6 +35,26 @@ export class ApiService {
     this.axiosInstance.interceptors.response.use(
       (response: AxiosResponse) => response,
       async (error) => {
+        const originalRequest = error.config;
+        if (error.response.status === 401 && !originalRequest._retry) {
+          originalRequest._retry = true;
+          try {
+            const currentRefreshToken = authStorageService().getRefreshToken();
+            const response = await this.post('/auth/refresh', {
+              refreshToken: currentRefreshToken,
+            });
+            const { token, refreshToken } = response;
+            token && authStorageService().setToken(token);
+            refreshToken && authStorageService().setRefreshToken(refreshToken);
+
+            // Retry the original request with the new token
+            originalRequest.headers.Authorization = `Bearer ${token}`;
+            return axios(originalRequest);
+          } catch (error) {
+            // Redirect to login if refresh token is invalid
+            window.location.href = '/login';
+          }
+        }
         this.handleError(error);
         return Promise.reject(error);
       },

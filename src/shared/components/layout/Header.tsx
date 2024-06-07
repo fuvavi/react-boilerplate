@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { twMerge } from 'tailwind-merge';
 
 const Header = ({ className }: { className?: string }) => {
-  const { user } = useAppSelector((state) => state.user);
+  const { user, isLoading } = useAppSelector((state) => state.user);
 
   return (
     <header className={twMerge('absolute inset-x-0 top-0 z-50', className)}>
@@ -20,7 +20,7 @@ const Header = ({ className }: { className?: string }) => {
           >
             Admin
           </Link>
-          {user ? (
+          {!isLoading && user ? (
             <div className="flex items-center gap-2">
               <img
                 className="w-10 h-10 rounded-full"
