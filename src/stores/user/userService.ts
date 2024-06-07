@@ -22,7 +22,7 @@ const loginUser = async (input: UserInputInterface) => {
   const data = await apiService.post(`${endpoint}/login`, input);
   const {
     token,
-    refresh_token,
+    refreshToken,
     id,
     firstName,
     lastName,
@@ -32,7 +32,7 @@ const loginUser = async (input: UserInputInterface) => {
   } = data;
 
   token && authStorageService().setToken(token);
-  refresh_token && authStorageService().setRefreshToken(token);
+  refreshToken && authStorageService().setRefreshToken(refreshToken);
 
   return {
     user: {

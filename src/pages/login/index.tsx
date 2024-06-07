@@ -18,15 +18,14 @@ const Login = () => {
   );
   const query = useQueryParams();
   const fromUrl = query.get('from');
-
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<UserLoginInterface>({
     defaultValues: {
-      username: 'kminchelle',
-      password: '0lelplR',
+      username: 'emilys',
+      password: 'emilyspass',
     },
   });
 
