@@ -14,7 +14,7 @@ function App() {
 
   useEffect(() => {
     !user && accessToken && dispatch(getMe());
-  }, [user]);
+  }, [accessToken, dispatch, user]);
 
   return (
     <Router>
